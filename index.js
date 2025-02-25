@@ -13,6 +13,9 @@ addResetListener();
 function startGame () {
     numberOfMove = 0;
     fieldSize = prompt('Какое поле?', '3')
+
+    if (fieldSize === null)
+        startGame();
     
     field = [];
     for (let i = 0; i < fieldSize; i++) {
@@ -53,7 +56,29 @@ function cellClickHandler (row, col) {
     }
 
     numberOfMove++;
-    console.log(checkWin());
+    let winner = checkWin();
+    if (winner !== null) {
+        coloring(winner);
+    }
+}
+
+function coloring(winner) {
+    const symbol = field[winner[0][0]][winner[0][1]]
+    console.log(symbol);
+    console.log(winner)
+    for (const pos in winner) {
+        const row = winner[pos][0];
+        const col = winner[pos][1];
+        console.log(pos)
+        if (symbol === ZERO) {
+            renderSymbolInCell(ZERO, row, col, '#FF0000')
+        } else {
+            renderSymbolInCell(CROSS, row, col, '#FF0000')
+        }
+    }
+
+    announceWin(symbol)
+
 }
 
 function renderSymbolInCell (symbol, row, col, color = '#333') {
@@ -80,12 +105,12 @@ function resetClickHandler () {
 
 
 function checkWin() {
+
     if (numberOfMove === fieldSize * fieldSize) {
         alert('Победила дружба! Начнём сначала')
         startGame();
     }
 
-    const fieldSize = field.length;
     for (let i = 0; i < fieldSize; i++) {
         if (field[i][0] !== EMPTY && field[i].every(cell => cell === field[i][0])) {
             return field[i].map((_, j) => [i, j]);
@@ -107,6 +132,10 @@ function checkWin() {
     }
 
     return null;
+}
+
+function announceWin(winner) {
+    alert(`Победили ${winner}`)
 }
 
 /* Test Function */
