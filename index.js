@@ -4,6 +4,7 @@ const EMPTY = ' ';
 let fieldSize;
 let numberOfMove;
 let field;
+let isWin
 
 const container = document.getElementById('fieldWrapper');
 
@@ -13,6 +14,7 @@ addResetListener();
 function startGame () {
     numberOfMove = 0;
     fieldSize = prompt('Какое поле?', '3')
+    isWin = false;
 
     if (fieldSize === null)
         startGame();
@@ -59,6 +61,7 @@ function cellClickHandler (row, col) {
     let winner = checkWin();
     if (winner !== null) {
         coloring(winner);
+        isWin = true;
     }
 }
 
@@ -82,10 +85,12 @@ function coloring(winner) {
 }
 
 function renderSymbolInCell (symbol, row, col, color = '#333') {
-    const targetCell = findCell(row, col);
+    if (!isWin) {
+        const targetCell = findCell(row, col);
 
-    targetCell.textContent = symbol;
-    targetCell.style.color = color;
+        targetCell.textContent = symbol;
+        targetCell.style.color = color;
+    }
 }
 
 function findCell (row, col) {
