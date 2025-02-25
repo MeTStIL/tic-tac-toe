@@ -1,6 +1,7 @@
 const CROSS = 'X';
 const ZERO = 'O';
 const EMPTY = ' ';
+let numberOfMove = 0;
 
 const container = document.getElementById('fieldWrapper');
 
@@ -8,7 +9,7 @@ startGame();
 addResetListener();
 
 function startGame () {
-
+    numberOfMove = 0;
     const size = prompt("Какое поле?", "3")
     renderGrid(+size);
 }
@@ -29,7 +30,12 @@ function renderGrid (dimension) {
 }
 
 function cellClickHandler (row, col) {
-    // Пиши код тут
+    if (numberOfMove % 2 === 0) {
+        renderSymbolInCell(ZERO, row, col);
+    } else {
+        renderSymbolInCell(CROSS, row, col);
+    }
+    numberOfMove++;
     console.log(`Clicked on cell: ${row}, ${col}`);
 
 
@@ -56,6 +62,7 @@ function addResetListener () {
 }
 
 function resetClickHandler () {
+    startGame();
     console.log('reset!');
 }
 
