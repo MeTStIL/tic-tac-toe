@@ -8,7 +8,9 @@ startGame();
 addResetListener();
 
 function startGame () {
-    renderGrid(3);
+
+    const size = prompt("Какое поле?", "3")
+    renderGrid(+size);
 }
 
 function renderGrid (dimension) {
