@@ -3,6 +3,12 @@ const ZERO = 'O';
 const EMPTY = ' ';
 let numberOfMove = 0;
 
+let field = [
+    [EMPTY, EMPTY, EMPTY],
+    [EMPTY, EMPTY, EMPTY], 
+    [EMPTY, EMPTY, EMPTY]
+]
+
 const container = document.getElementById('fieldWrapper');
 
 startGame();
@@ -30,10 +36,15 @@ function renderGrid (dimension) {
 }
 
 function cellClickHandler (row, col) {
+    if (field[row][col] !== EMPTY){
+        return
+    }
     if (numberOfMove % 2 === 0) {
         renderSymbolInCell(ZERO, row, col);
+        field[row][col] = ZERO;
     } else {
         renderSymbolInCell(CROSS, row, col);
+        field[row][col] = CROSS;
     }
     numberOfMove++;
     console.log(`Clicked on cell: ${row}, ${col}`);
