@@ -12,12 +12,16 @@ addResetListener();
 
 function startGame () {
     numberOfMove = 0;
-    field =  [
-        [EMPTY, EMPTY, EMPTY],
-        [EMPTY, EMPTY, EMPTY],
-        [EMPTY, EMPTY, EMPTY]
-    ];
     fieldSize = prompt('Какое поле?', '3')
+    
+    field = [];
+    for (let i = 0; i < fieldSize; i++) {
+        field[i] = [];
+        for (let j = 0; j < fieldSize; j++) {
+            field[i][j] = EMPTY;
+        }
+    }
+
     renderGrid(+fieldSize);
 }
 
@@ -49,7 +53,7 @@ function cellClickHandler (row, col) {
     }
 
     numberOfMove++;
-    checkWin();
+    console.log(checkWin());
 }
 
 function renderSymbolInCell (symbol, row, col, color = '#333') {
@@ -81,6 +85,28 @@ function checkWin() {
         startGame();
     }
 
+    const size = field.length;
+    for (let i = 0; i < size; i++) {
+        if (field[i][0] !== EMPTY && field[i].every(cell => cell === field[i][0])) {
+            return field[i][0];
+        }
+    }
+
+    for (let j = 0; j < size; j++) {
+        if (field[0][j] !== EMPTY && field.every(row => row[j] === field[0][j])) {
+            return field[0][j];
+        }
+    }
+
+    if (field[0][0] !== EMPTY && field.every((row, i) => row[i] === field[0][0])) {
+        return field[0][0];
+    }
+
+    if (field[0][size - 1] !== EMPTY && field.every((row, i) => row[size - 1 - i] === field[0][size - 1])) {
+        return field[0][size - 1];
+    }
+
+    return null;
 }
 
 /* Test Function */
