@@ -85,25 +85,25 @@ function checkWin() {
         startGame();
     }
 
-    const size = field.length;
-    for (let i = 0; i < size; i++) {
+    const fieldSize = field.length;
+    for (let i = 0; i < fieldSize; i++) {
         if (field[i][0] !== EMPTY && field[i].every(cell => cell === field[i][0])) {
-            return field[i][0];
+            return field[i].map((_, j) => [i, j]);
         }
     }
 
-    for (let j = 0; j < size; j++) {
+    for (let j = 0; j < fieldSize; j++) {
         if (field[0][j] !== EMPTY && field.every(row => row[j] === field[0][j])) {
-            return field[0][j];
+            return field.map((_, i) => [i, j]);
         }
     }
 
     if (field[0][0] !== EMPTY && field.every((row, i) => row[i] === field[0][0])) {
-        return field[0][0];
+        return field.map((_, i) => [i, i]);
     }
 
-    if (field[0][size - 1] !== EMPTY && field.every((row, i) => row[size - 1 - i] === field[0][size - 1])) {
-        return field[0][size - 1];
+    if (field[0][fieldSize - 1] !== EMPTY && field.every((row, i) => row[fieldSize - 1 - i] === field[0][fieldSize - 1])) {
+        return field.map((_, i) => [i, fieldSize - 1 - i]);
     }
 
     return null;
