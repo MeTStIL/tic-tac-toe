@@ -1,13 +1,9 @@
 const CROSS = 'X';
 const ZERO = 'O';
 const EMPTY = ' ';
-let numberOfMove = 0;
-
-let field = [
-    [EMPTY, EMPTY, EMPTY],
-    [EMPTY, EMPTY, EMPTY], 
-    [EMPTY, EMPTY, EMPTY]
-]
+let fieldSize;
+let numberOfMove;
+let field;
 
 const container = document.getElementById('fieldWrapper');
 
@@ -16,8 +12,13 @@ addResetListener();
 
 function startGame () {
     numberOfMove = 0;
-    const size = prompt("Какое поле?", "3")
-    renderGrid(+size);
+    field =  [
+        [EMPTY, EMPTY, EMPTY],
+        [EMPTY, EMPTY, EMPTY],
+        [EMPTY, EMPTY, EMPTY]
+    ];
+    fieldSize = prompt('Какое поле?', '3')
+    renderGrid(+fieldSize);
 }
 
 function renderGrid (dimension) {
@@ -46,13 +47,9 @@ function cellClickHandler (row, col) {
         renderSymbolInCell(CROSS, row, col);
         field[row][col] = CROSS;
     }
+
     numberOfMove++;
-    console.log(`Clicked on cell: ${row}, ${col}`);
-
-
-    /* Пользоваться методом для размещения символа в клетке так:
-        renderSymbolInCell(ZERO, row, col);
-     */
+    checkWin();
 }
 
 function renderSymbolInCell (symbol, row, col, color = '#333') {
@@ -77,6 +74,14 @@ function resetClickHandler () {
     console.log('reset!');
 }
 
+
+function checkWin() {
+    if (numberOfMove === fieldSize * fieldSize) {
+        alert('Победила дружба! Начнём сначала')
+        startGame();
+    }
+
+}
 
 /* Test Function */
 /* Победа первого игрока */
